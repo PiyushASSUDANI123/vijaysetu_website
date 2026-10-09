@@ -242,19 +242,24 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <div className="flex items-center space-x-3">
-              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-md font-black text-2xl">
-                V
-              </div>
+            <a href="#" className="flex items-center space-x-3 group">
+              <img
+                src="/logo.png"
+                alt="VijaySetu Logo"
+                className="w-11 h-11 object-contain rounded-xl shadow-sm ring-1 ring-slate-200/80 group-hover:scale-105 transition-transform bg-white"
+              />
               <div>
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
-                  Vijay<span className="text-emerald-600">Setu</span>
+                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
+                  Vijay<span className="text-emerald-700">Setu</span>
+                  <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
+                    विजयसेतु
+                  </span>
                 </span>
-                <span className="text-[11px] font-bold text-slate-500 block tracking-wider uppercase -mt-1">
-                  विजयसेतु • डिजिटल वॉर रूम
+                <span className="text-[11px] font-bold text-slate-500 block tracking-wider -mt-0.5">
+                  हर वोट • सही दिशा • जीत की ओर
                 </span>
               </div>
-            </div>
+            </a>
 
             {/* Desktop Nav Links */}
             <div className="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-700">
@@ -398,9 +403,11 @@ export default function LandingPage() {
 
                 {/* WhatsApp Chat Header */}
                 <div className="bg-[#075e54] p-3 rounded-2xl flex items-center space-x-3 mb-3 text-white shadow-sm">
-                  <div className="w-9 h-9 rounded-full bg-emerald-500 flex items-center justify-center font-bold text-sm text-white">
-                    V
-                  </div>
+                  <img
+                    src="/logo.png"
+                    alt="VijaySetu"
+                    className="w-9 h-9 rounded-full bg-white object-contain p-0.5 shadow-sm"
+                  />
                   <div className="flex-1 min-w-0">
                     <div className="text-xs font-bold truncate">VijaySetu Bot • चुनाव सेवा</div>
                     <div className="text-[10px] text-emerald-100 flex items-center space-x-1">
@@ -1337,12 +1344,16 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500 flex items-center justify-center font-black text-xl text-white">
-                  V
-                </div>
+                <img
+                  src="/logo.png"
+                  alt="VijaySetu Logo"
+                  className="w-12 h-12 object-contain rounded-xl bg-white/10 p-1 ring-1 ring-white/10"
+                />
                 <div>
-                  <div className="text-2xl font-black">VijaySetu</div>
-                  <div className="text-xs text-slate-400">राजनीतिक चुनाव प्रबंधन व डिजिटल वॉर रूम</div>
+                  <div className="text-2xl font-black tracking-tight">
+                    Vijay<span className="text-emerald-400">Setu</span>
+                  </div>
+                  <div className="text-xs text-slate-400 font-medium">राजनीतिक चुनाव प्रबंधन व डिजिटल वॉर रूम</div>
                 </div>
               </div>
               <p className="text-xs text-slate-400 max-w-md leading-relaxed">
@@ -1446,16 +1457,23 @@ export default function LandingPage() {
               </div>
             ) : (
               <div>
-                <div className="mb-6">
-                  <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
-                    मुफ़्त लाइव डेमो
-                  </span>
-                  <h3 className="text-xl font-black text-slate-900 mt-2">
-                    अपने क्षेत्र का चुनाव वॉर-रूम देखें
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1">
-                    नीचे विवरण भरें, हमारी टीम आपको तुरंत लाइव डेमो व सटीक कोटेशन प्रदान करेगी।
-                  </p>
+                <div className="mb-6 flex items-start space-x-3.5">
+                  <img
+                    src="/logo.png"
+                    alt="VijaySetu"
+                    className="w-12 h-12 object-contain rounded-2xl p-1 bg-emerald-50 border border-emerald-200 shadow-sm shrink-0"
+                  />
+                  <div>
+                    <span className="text-[11px] font-bold text-emerald-800 uppercase tracking-wider bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200">
+                      मुफ़्त लाइव डेमो • VIP एक्सेस
+                    </span>
+                    <h3 className="text-xl font-black text-slate-900 mt-2">
+                      अपने क्षेत्र का चुनाव वॉर-रूम देखें
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1">
+                      नीचे विवरण भरें, हमारी टीम आपको तुरंत लाइव डेमो व सटीक कोटेशन प्रदान करेगी।
+                    </p>
+                  </div>
                 </div>
 
                 <form onSubmit={handleLeadSubmit} className="space-y-3.5">

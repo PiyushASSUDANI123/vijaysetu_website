@@ -1,31 +1,147 @@
 import type { Metadata } from 'next';
 import './globals.css';
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vijaysetu.in';
+
 export const metadata: Metadata = {
-  title: 'VijaySetu (विजयसेतु) | राजनीतिक चुनाव प्रबंधन व डिजिटल वॉर रूम सॉफ्टवेयर',
-  description: 'भारत का अग्रणी इलेक्शन मैनेजमेंट व वोटर डेटाबेस प्लेटफॉर्म। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन, बूथ-वार लाइव टर्नआउट, जातिगत समीकरण व रियल-टाइम वॉर रूम इंटेलिजेंस।',
+  metadataBase: new URL(siteUrl),
+  title: 'VijaySetu (विजयसेतु) | भारत का #1 चुनाव प्रबंधन व डिजिटल वॉर रूम सॉफ्टवेयर',
+  description: 'भारत का अग्रणी इलेक्शन मैनेजमेंट व वोटर डेटाबेस प्लेटफॉर्म। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन, बूथ-वार लाइव टर्नआउट, जातिगत समीकरण व रियल-टाइम वॉर रूम इंटेलिजेंस। संपर्क करें: +91 6375 324 945',
   keywords: [
     'VijaySetu',
+    'विजयसेतु',
     'Election Management Software India',
     'Voter Slip Generator WhatsApp',
     'Chunav War Room Software',
     'Panna Pramukh Management App',
     'Booth Level Voter Analytics',
     'Voter List OCR Hindi PDF',
-    'Political Campaign Management System'
+    'Political Campaign Management System',
+    'WhatsApp Election Campaign',
+    'Booth Adhyaksh App'
   ],
-  authors: [{ name: 'VijaySetu Team' }],
-  icons: {
-    icon: '/logo.png',
+  authors: [{ name: 'VijaySetu Team', url: siteUrl }],
+  creator: 'VijaySetu Technologies',
+  publisher: 'VijaySetu',
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: true,
   },
+  alternates: {
+    canonical: siteUrl,
+  },
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: '48x48' },
+      { url: '/icon.png', sizes: '512x512', type: 'image/png' },
+    ],
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
+  },
+  manifest: '/manifest.webmanifest',
   openGraph: {
-    title: 'VijaySetu - चुनाव प्रबंधन का संपूर्ण डिजिटल वॉर रूम',
-    description: 'बूथ से लेकर वॉर-रूम तक, हर वोट और कार्यकर्ता पर सटीक नियंत्रण। लाइव टर्नआउट, डिजिटल पर्ची व माइक्रो-टारगेटिंग।',
-    url: 'https://vijaysetu.piyushassudani.in',
-    siteName: 'VijaySetu',
+    title: 'VijaySetu (विजयसेतु) - चुनाव प्रबंधन का संपूर्ण डिजिटल वॉर रूम',
+    description: 'बूथ से लेकर वॉर-रूम तक, हर वोट और कार्यकर्ता पर सटीक नियंत्रण। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन व लाइव टर्नआउट। डेमो बुक करें: +91 6375 324 945',
+    url: siteUrl,
+    siteName: 'VijaySetu (विजयसेतु)',
     locale: 'hi_IN',
     type: 'website',
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'VijaySetu - Bharat Ka #1 Election Management Software & Digital War Room',
+        type: 'image/png',
+      },
+      {
+        url: '/logo.png',
+        width: 512,
+        height: 512,
+        alt: 'VijaySetu Logo',
+        type: 'image/png',
+      },
+    ],
   },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'VijaySetu (विजयसेतु) | Election Management Software & War Room',
+    description: 'बूथ से लेकर वॉर-रूम तक हर वोट पर सटीक नियंत्रण। 1-सेकंड मतदाता पर्ची व WhatsApp ऑटोमेशन।',
+    images: ['/og-image.png'],
+    creator: '@VijaySetu',
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      'max-video-preview': -1,
+      'max-image-preview': 'large',
+      'max-snippet': -1,
+    },
+  },
+  category: 'Political Technology / Election Management',
+};
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'Organization',
+      '@id': `${siteUrl}/#organization`,
+      name: 'VijaySetu (विजयसेतु)',
+      url: siteUrl,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${siteUrl}/logo.png`,
+        width: 512,
+        height: 512,
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        telephone: '+91-6375324945',
+        contactType: 'sales & technical support',
+        availableLanguage: ['Hindi', 'English'],
+        areaServed: 'IN',
+      },
+    },
+    {
+      '@type': 'SoftwareApplication',
+      '@id': `${siteUrl}/#software`,
+      name: 'VijaySetu',
+      operatingSystem: 'Web, Android, iOS',
+      applicationCategory: 'BusinessApplication',
+      offers: {
+        '@type': 'AggregateOffer',
+        priceCurrency: 'INR',
+        lowPrice: '15000',
+        highPrice: '50000',
+        offerCount: '3',
+      },
+      aggregateRating: {
+        '@type': 'AggregateRating',
+        ratingValue: '4.9',
+        ratingCount: '240',
+        bestRating: '5',
+      },
+      description:
+        'संपूर्ण चुनावी प्रबंधन सॉफ्टवेयर — AI वोटर OCR, 1-सेकंड डिजिटल मतदाता पर्ची, WhatsApp बल्क डिलीवरी, बूथ अध्यक्ष ऐप, पन्ना प्रमुख ट्रैकिंग और रियल-टाइम वॉर रूम।',
+    },
+    {
+      '@type': 'WebSite',
+      '@id': `${siteUrl}/#website`,
+      url: siteUrl,
+      name: 'VijaySetu (विजयसेतु)',
+      publisher: {
+        '@id': `${siteUrl}/#organization`,
+      },
+      inLanguage: 'hi-IN',
+    },
+  ],
 };
 
 export default function RootLayout({
@@ -39,8 +155,12 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
         <link
-          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+Devanagari:wght@400;500;600;700;800&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Noto+Sans+Devanagari:wght@400;500;600;700;800;900&display=swap"
           rel="stylesheet"
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="min-h-screen bg-[#f8fafc] text-[#0f172a] antialiased selection:bg-emerald-500 selection:text-white">
