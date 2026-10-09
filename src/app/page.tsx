@@ -256,44 +256,44 @@ export default function LandingPage() {
       {/* STICKY NAVBAR */}
       <nav className="sticky top-0 z-50 glass-nav bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="#" className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0">
+          <div className="flex items-center justify-between h-20 gap-4">
+            {/* Logo (shrink-0 prevents crushing) */}
+            <a href="#" className="flex items-center space-x-2.5 sm:space-x-3 group shrink-0">
               <img
                 src="/logo.png"
                 alt="VijaySetu Logo"
                 className="w-10 h-10 sm:w-11 sm:h-11 object-contain rounded-xl shadow-sm ring-1 ring-slate-200/80 group-hover:scale-105 transition-transform bg-white shrink-0"
               />
-              <div className="min-w-0">
+              <div className="flex flex-col">
                 <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
                   Vijay<span className="text-emerald-700">Setu</span>
                   <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
                     विजयसेतु
                   </span>
                 </span>
-                <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 block tracking-wider -mt-0.5 truncate">
+                <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 block tracking-wider -mt-0.5 whitespace-nowrap">
                   हर वोट • सही दिशा • जीत की ओर
                 </span>
               </div>
             </a>
 
-            {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-700">
-              <a href="#features" className="hover:text-emerald-600 transition-colors">सुविधाएं (Features)</a>
-              <a href="#simulator" className="hover:text-emerald-600 transition-colors">लाइव पर्ची डेमो</a>
-              <a href="#roles" className="hover:text-emerald-600 transition-colors">मोबाइल व वॉर रूम</a>
-              <a href="#comparison" className="hover:text-emerald-600 transition-colors">अंतर (Comparison)</a>
-              <a href="#plans" className="hover:text-emerald-600 transition-colors">पैकेजेस (Pricing)</a>
-              <a href="#faq" className="hover:text-emerald-600 transition-colors">FAQ</a>
+            {/* Desktop Nav Links (Clean, concise Hindi labels with safe gap) */}
+            <div className="hidden xl:flex items-center gap-6 2xl:gap-8 text-sm font-semibold text-slate-700">
+              <a href="#features" className="hover:text-emerald-600 transition-colors whitespace-nowrap">सुविधाएं</a>
+              <a href="#simulator" className="hover:text-emerald-600 transition-colors whitespace-nowrap">पर्ची डेमो</a>
+              <a href="#roles" className="hover:text-emerald-600 transition-colors whitespace-nowrap">वॉर-रूम</a>
+              <a href="#comparison" className="hover:text-emerald-600 transition-colors whitespace-nowrap">तुलना</a>
+              <a href="#plans" className="hover:text-emerald-600 transition-colors whitespace-nowrap">पैकेजेस</a>
+              <a href="#faq" className="hover:text-emerald-600 transition-colors whitespace-nowrap">FAQ</a>
             </div>
 
             {/* Nav Actions */}
-            <div className="flex items-center space-x-2 sm:space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3 shrink-0">
               <a
                 href={getWaLink('नमस्ते VijaySetu टीम, मुझे सॉफ्टवेयर के बारे में जानकारी चाहिए।')}
                 target="_blank"
                 rel="noreferrer"
-                className="hidden xl:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                className="hidden 2xl:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors whitespace-nowrap"
               >
                 <Phone size={13} className="text-emerald-600" />
                 <span>{DISPLAY_PHONE}</span>
@@ -303,25 +303,24 @@ export default function LandingPage() {
                 href="https://vijaysetu.vercel.app/login"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden md:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-600 px-3.5 py-2 rounded-xl transition-colors border border-slate-200 hover:border-slate-300"
+                className="hidden sm:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-600 px-3.5 py-2 rounded-xl transition-colors border border-slate-200 hover:border-slate-300 whitespace-nowrap"
               >
                 लॉगिन
               </a>
 
               <button
                 onClick={() => setLeadModalOpen(true)}
-                className="glow-btn px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center space-x-1.5 sm:space-x-2 cursor-pointer shadow-md shrink-0"
+                className="glow-btn px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center space-x-1.5 cursor-pointer shadow-md shrink-0 whitespace-nowrap"
               >
                 <Sparkles size={15} />
-                <span className="hidden xs:inline sm:inline">फ्री लाइव डेमो</span>
-                <span className="inline xs:hidden sm:hidden">डेमो</span>
+                <span>फ्री लाइव डेमो</span>
               </button>
 
-              {/* Mobile Hamburger Button */}
+              {/* Hamburger Button (shown on screens < xl) */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                aria-label="Toggle mobile menu"
-                className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors border border-slate-200 cursor-pointer"
+                aria-label="Toggle navigation menu"
+                className="xl:hidden p-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors border border-slate-200 cursor-pointer shrink-0"
               >
                 {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
@@ -331,7 +330,7 @@ export default function LandingPage() {
 
         {/* Mobile Navigation Drawer */}
         {mobileMenuOpen && (
-          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-xl">
+          <div className="xl:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-xl">
             <div className="flex flex-col space-y-1 text-sm font-bold text-slate-800">
               <a
                 href="#features"
