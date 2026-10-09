@@ -3,12 +3,8 @@
 import React, { useState } from 'react';
 import {
   Search,
-  Send,
   Users,
-  BarChart3,
-  CalendarDays,
   Activity,
-  ShieldCheck,
   CheckCircle2,
   Phone,
   MessageCircle,
@@ -16,20 +12,18 @@ import {
   ArrowRight,
   Vote,
   Target,
-  Smartphone,
   Check,
   X,
-  HelpCircle,
-  ExternalLink,
   ChevronDown,
   Layers,
-  MapPin,
-  Printer,
   FileSpreadsheet,
-  Clock,
-  Zap,
-  Award
+  Lock,
+  Headphones,
+  Database
 } from 'lucide-react';
+
+const WHATSAPP_NUMBER = '916375324945';
+const DISPLAY_PHONE = '+91 6375 324 945';
 
 export default function LandingPage() {
   // Slip Simulator State
@@ -51,6 +45,7 @@ export default function LandingPage() {
 
   // Lead Modal
   const [leadModalOpen, setLeadModalOpen] = useState(false);
+  const [leadSubmitting, setLeadSubmitting] = useState(false);
   const [leadSubmitted, setLeadSubmitted] = useState(false);
   const [leadForm, setLeadForm] = useState({
     name: '',
@@ -188,13 +183,39 @@ export default function LandingPage() {
     }
   ];
 
-  const handleLeadSubmit = (e: React.FormEvent) => {
+  const handleLeadSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLeadSubmitting(true);
+
+    const waText = `नमस्ते VijaySetu टीम, मुझे चुनाव वॉर-रूम और वोटर सॉफ्टवेयर का लाइव डेमो चाहिए।\n\nउम्मीदवार / नाम: ${leadForm.name}\nमोबाइल: ${leadForm.phone}\nक्षेत्र / वार्ड: ${leadForm.constituency}\nचुनाव स्तर: ${leadForm.electionType}`;
+    const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waText)}`;
+
+    try {
+      // Post to backend database so it appears in Admin Panel
+      await fetch('http://localhost:5002/api/admin/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(leadForm),
+      });
+    } catch (err) {
+      console.warn('Backend leads API warning:', err);
+    }
+
+    setLeadSubmitting(false);
     setLeadSubmitted(true);
+
+    // Open WhatsApp to +91 6375 324 945
+    window.open(waUrl, '_blank');
+
     setTimeout(() => {
       setLeadModalOpen(false);
       setLeadSubmitted(false);
-    }, 2500);
+      setLeadForm({ name: '', phone: '', constituency: '', electionType: 'विधानसभा (Assembly)' });
+    }, 2800);
+  };
+
+  const getWaLink = (message: string) => {
+    return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;
   };
 
   return (
@@ -205,53 +226,63 @@ export default function LandingPage() {
           <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase">New 2026 Edition</span>
           <span>100% प्री-लोडेड वोटर डेटा • 24 घंटे में लाइव वॉर रूम • ECI फॉर्मेट WhatsApp पर्ची</span>
           <a
-            href="https://wa.me/919999999999?text=Hello%20VijaySetu%20Team%2C%20I%20want%20a%20demo%20of%20the%20Election%20War%20Room%20Software"
+            href={getWaLink('नमस्ते VijaySetu टीम, मुझे चुनाव वॉर-रूम सॉफ्टवेयर का लाइव डेमो चाहिए।')}
             target="_blank"
             rel="noreferrer"
             className="hidden md:inline-flex items-center space-x-1 underline font-bold ml-2 hover:text-emerald-200"
           >
-            <span>डेमो लें</span>
+            <span>डेमो लें ({DISPLAY_PHONE})</span>
             <ArrowRight size={12} />
           </a>
         </div>
       </div>
 
       {/* STICKY NAVBAR */}
-      <nav className="sticky top-0 z-50 glass-nav">
+      <nav className="sticky top-0 z-50 glass-nav bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-18">
+          <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-md font-black text-xl">
+              <div className="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-600 to-teal-800 flex items-center justify-center text-white shadow-md font-black text-2xl">
                 V
               </div>
               <div>
                 <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900">
-                  Vijay<span className="text-emerald-700">Setu</span>
+                  Vijay<span className="text-emerald-600">Setu</span>
                 </span>
-                <span className="text-[10px] font-bold text-slate-700 block tracking-wider uppercase -mt-1">
+                <span className="text-[11px] font-bold text-slate-500 block tracking-wider uppercase -mt-1">
                   विजयसेतु • डिजिटल वॉर रूम
                 </span>
               </div>
             </div>
 
             {/* Desktop Nav Links */}
-            <div className="hidden lg:flex items-center space-x-7 text-sm font-semibold text-slate-600">
-              <a href="#features" className="hover:text-emerald-700 transition-colors">सुविधाएं (Features)</a>
-              <a href="#simulator" className="hover:text-emerald-700 transition-colors">लाइव पर्ची डेमो</a>
-              <a href="#roles" className="hover:text-emerald-700 transition-colors">मोबाइल व वॉर रूम</a>
-              <a href="#comparison" className="hover:text-emerald-700 transition-colors">अंतर (Comparison)</a>
-              <a href="#plans" className="hover:text-emerald-700 transition-colors">पैकेजेस (Pricing)</a>
-              <a href="#faq" className="hover:text-emerald-700 transition-colors">FAQ</a>
+            <div className="hidden lg:flex items-center space-x-8 text-sm font-semibold text-slate-700">
+              <a href="#features" className="hover:text-emerald-600 transition-colors">सुविधाएं (Features)</a>
+              <a href="#simulator" className="hover:text-emerald-600 transition-colors">लाइव पर्ची डेमो</a>
+              <a href="#roles" className="hover:text-emerald-600 transition-colors">मोबाइल व वॉर रूम</a>
+              <a href="#comparison" className="hover:text-emerald-600 transition-colors">अंतर (Comparison)</a>
+              <a href="#plans" className="hover:text-emerald-600 transition-colors">पैकेजेस (Pricing)</a>
+              <a href="#faq" className="hover:text-emerald-600 transition-colors">FAQ</a>
             </div>
 
             {/* Nav Actions */}
             <div className="flex items-center space-x-3">
               <a
+                href={getWaLink('नमस्ते VijaySetu टीम, मुझे सॉफ्टवेयर के बारे में जानकारी चाहिए।')}
+                target="_blank"
+                rel="noreferrer"
+                className="hidden xl:inline-flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+              >
+                <Phone size={13} className="text-emerald-600" />
+                <span>{DISPLAY_PHONE}</span>
+              </a>
+
+              <a
                 href="http://localhost:3000/login"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden sm:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-700 px-4 py-2 rounded-xl transition-colors"
+                className="hidden sm:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-600 px-4 py-2 rounded-xl transition-colors border border-slate-200 hover:border-slate-300"
               >
                 लॉगिन करें
               </a>
@@ -328,13 +359,13 @@ export default function LandingPage() {
                 </button>
 
                 <a
-                  href="https://wa.me/919999999999?text=Hello%20VijaySetu%20Team%2C%20I%20want%20a%20demo%20of%20the%20Election%20War%20Room%20Software"
+                  href={getWaLink('नमस्ते VijaySetu टीम, मुझे चुनाव वॉर-रूम सॉफ्टवेयर के बारे में बात करनी है।')}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-4 rounded-2xl text-base font-bold text-emerald-800 bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 flex items-center justify-center space-x-2 transition-all"
+                  className="px-6 py-4 rounded-2xl text-base font-bold text-emerald-800 bg-white hover:bg-emerald-50 border-2 border-emerald-300 flex items-center justify-center space-x-2 transition-all shadow-sm"
                 >
-                  <MessageCircle size={20} className="text-emerald-700" />
-                  <span>सीधे WhatsApp पर बात करें</span>
+                  <MessageCircle size={20} className="text-emerald-600" />
+                  <span>WhatsApp पर बात करें ({DISPLAY_PHONE})</span>
                 </a>
               </div>
 
@@ -397,33 +428,33 @@ export default function LandingPage() {
 
                     <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
                       <div>
-                        <span className="text-slate-700 block text-[10px]">मतदाता का नाम:</span>
+                        <span className="text-slate-500 block text-[10px]">मतदाता का नाम:</span>
                         <strong className="text-slate-900">{voterName}</strong>
                       </div>
                       <div>
-                        <span className="text-slate-700 block text-[10px]">संबंधी का नाम:</span>
+                        <span className="text-slate-500 block text-[10px]">संबंधी का नाम:</span>
                         <strong className="text-slate-900">{voterFather}</strong>
                       </div>
                       <div>
-                        <span className="text-slate-700 block text-[10px]">वार्ड / भाग संख्या:</span>
-                        <strong className="text-emerald-800 font-bold">वार्ड {voterWard} (भाग {voterBooth})</strong>
+                        <span className="text-slate-500 block text-[10px]">वार्ड / भाग संख्या:</span>
+                        <strong className="text-emerald-700 font-bold">वार्ड {voterWard} (भाग {voterBooth})</strong>
                       </div>
                       <div>
-                        <span className="text-slate-700 block text-[10px]">क्रम संख्या (Serial):</span>
-                        <strong className="text-emerald-800 font-black text-sm">{voterSerial}</strong>
+                        <span className="text-slate-500 block text-[10px]">क्रम संख्या (Serial):</span>
+                        <strong className="text-emerald-700 font-black text-sm">{voterSerial}</strong>
                       </div>
                       <div>
-                        <span className="text-slate-700 block text-[10px]">मकान संख्या:</span>
+                        <span className="text-slate-500 block text-[10px]">मकान संख्या:</span>
                         <strong className="text-slate-900">{voterHouse}</strong>
                       </div>
                       <div>
-                        <span className="text-slate-700 block text-[10px]">EPIC ID:</span>
+                        <span className="text-slate-500 block text-[10px]">EPIC ID:</span>
                         <strong className="text-slate-900 font-mono">{voterEpic}</strong>
                       </div>
                     </div>
 
                     <div className="border-t border-slate-100 pt-1.5">
-                      <span className="text-slate-700 block text-[10px]">मतदान केंद्र:</span>
+                      <span className="text-slate-500 block text-[10px]">मतदान केंद्र:</span>
                       <strong className="text-slate-800 text-[11px]">{pollingStation}</strong>
                     </div>
                   </div>
@@ -437,14 +468,14 @@ export default function LandingPage() {
                   <div className="pt-1 flex space-x-2">
                     <a
                       href="#simulator"
-                      className="flex-1 py-1.5 bg-[#128c7e] hover:bg-[#075e54] text-white text-[11px] font-bold rounded-lg text-center transition-colors shadow-sm flex items-center justify-center space-x-1"
+                      className="flex-1 py-2 bg-[#128c7e] hover:bg-[#075e54] text-white text-[11px] font-bold rounded-lg text-center transition-colors shadow-sm flex items-center justify-center space-x-1"
                     >
                       <Sparkles size={12} />
                       <span>लाइव एडिट करें</span>
                     </a>
                     <button
                       onClick={() => setLeadModalOpen(true)}
-                      className="flex-1 py-1.5 bg-white border border-slate-300 text-slate-800 text-[11px] font-bold rounded-lg text-center hover:bg-slate-50 transition-colors shadow-sm"
+                      className="flex-1 py-2 bg-white border border-slate-300 text-slate-800 text-[11px] font-bold rounded-lg text-center hover:bg-slate-50 transition-colors shadow-sm cursor-pointer"
                     >
                       डेमो पर्ची भेजें
                     </button>
@@ -461,10 +492,10 @@ export default function LandingPage() {
       </section>
 
       {/* 6 CORE MODULES (SMARTBOOTH ARCHITECTURE) */}
-      <section id="features" className="py-20 relative bg-white border-t border-slate-200">
+      <section id="features" className="py-20 relative bg-white border-t border-slate-200 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full">
               संपूर्ण चुनावी समाधान
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 mb-4">
@@ -481,27 +512,27 @@ export default function LandingPage() {
               return (
                 <div
                   key={m.id}
-                  className="p-7 rounded-3xl glass-card flex flex-col justify-between border-slate-200 hover:border-emerald-500 bg-slate-50/50 hover:bg-white transition-all shadow-sm hover:shadow-xl"
+                  className="p-8 rounded-3xl bg-white border-2 border-slate-100 hover:border-emerald-500 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5"
                 >
                   <div>
                     {/* Header with Icon and Badge */}
                     <div className="flex items-center justify-between mb-5">
-                      <div className="w-12 h-12 rounded-2xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold">
-                        <Icon size={24} />
+                      <div className="w-13 h-13 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-700 flex items-center justify-center font-bold">
+                        <Icon size={26} />
                       </div>
-                      <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2.5 py-1 rounded-full">
+                      <span className="text-[11px] font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-3 py-1 rounded-full">
                         {m.badge}
                       </span>
                     </div>
 
                     <h3 className="text-xl font-black text-slate-900 mb-1">{m.title}</h3>
-                    <div className="text-xs font-semibold text-emerald-800 mb-3">{m.subtitle}</div>
+                    <div className="text-xs font-semibold text-emerald-700 mb-3">{m.subtitle}</div>
                     <p className="text-xs text-slate-600 leading-relaxed mb-6 font-medium">
                       {m.description}
                     </p>
 
-                    {/* Features checklist */}
-                    <div className="space-y-2 mb-6">
+                    {/* Features list */}
+                    <div className="space-y-2.5 pt-4 border-t border-slate-100">
                       {m.features.map((f, i) => (
                         <div key={i} className="flex items-start space-x-2 text-xs text-slate-700">
                           <Check size={14} className="text-emerald-600 shrink-0 mt-0.5" />
@@ -511,15 +542,15 @@ export default function LandingPage() {
                     </div>
                   </div>
 
-                  {/* Card Metric Footer */}
-                  <div className="pt-4 border-t border-slate-200 flex items-center justify-between">
+                  {/* Card Footer Metric */}
+                  <div className="mt-8 pt-5 border-t border-slate-100 flex items-center justify-between">
                     <div>
-                      <div className="text-sm font-black text-emerald-800">{m.metric}</div>
-                      <div className="text-[10px] text-slate-500">{m.metricSub}</div>
+                      <div className="text-sm font-black text-slate-900">{m.metric}</div>
+                      <div className="text-[11px] text-slate-500">{m.metricSub}</div>
                     </div>
                     <button
                       onClick={() => setLeadModalOpen(true)}
-                      className="text-xs font-bold text-emerald-800 hover:text-emerald-900 flex items-center space-x-1"
+                      className="text-xs font-bold text-emerald-700 hover:text-emerald-800 flex items-center space-x-1 cursor-pointer"
                     >
                       <span>डेमो देखें</span>
                       <ArrowRight size={13} />
@@ -533,7 +564,7 @@ export default function LandingPage() {
       </section>
 
       {/* INTERACTIVE VOTER SLIP SIMULATOR SECTION */}
-      <section id="simulator" className="py-20 relative bg-[#f1f5f9] border-t border-b border-slate-200">
+      <section id="simulator" className="py-20 relative bg-[#f1f5f9] border-t border-b border-slate-200 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
@@ -573,7 +604,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Input Config Controls */}
-            <div className="lg:col-span-5 glass-card p-6 sm:p-8 rounded-3xl border-slate-200 space-y-4 bg-white shadow-md">
+            <div className="lg:col-span-5 bg-white border border-slate-200 p-6 sm:p-8 rounded-3xl space-y-4 shadow-xl">
               <h3 className="text-lg font-bold text-slate-900 flex items-center space-x-2">
                 <Target size={18} className="text-emerald-600" />
                 <span>पर्ची कस्टमाइज़ेशन पैनल</span>
@@ -692,7 +723,7 @@ export default function LandingPage() {
                 />
               </div>
 
-              <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 text-xs text-emerald-800">
+              <div className="p-3.5 bg-emerald-50 rounded-2xl border border-emerald-200 text-xs text-emerald-900">
                 💡 <strong>स्मार्टबूथ टेक्नोलॉजी:</strong> वास्तविक चुनाव में यह पर्ची 1-क्लिक में आधिकारिक WhatsApp Cloud API से सीधे मतदाता के मोबाइल पर डिलीवर होती है।
               </div>
             </div>
@@ -746,33 +777,33 @@ export default function LandingPage() {
 
                         <div className="grid grid-cols-2 gap-x-2 gap-y-1.5">
                           <div>
-                            <span className="text-slate-700 block text-[10px]">मतदाता का नाम:</span>
+                            <span className="text-slate-500 block text-[10px]">मतदाता का नाम:</span>
                             <strong className="text-slate-900">{voterName}</strong>
                           </div>
                           <div>
-                            <span className="text-slate-700 block text-[10px]">पिता/पति का नाम:</span>
+                            <span className="text-slate-500 block text-[10px]">पिता/पति का नाम:</span>
                             <strong className="text-slate-900">{voterFather}</strong>
                           </div>
                           <div>
-                            <span className="text-slate-700 block text-[10px]">वार्ड व भाग संख्या:</span>
-                            <strong className="text-emerald-800 font-bold">वार्ड {voterWard} • भाग {voterBooth}</strong>
+                            <span className="text-slate-500 block text-[10px]">वार्ड व भाग संख्या:</span>
+                            <strong className="text-emerald-700 font-bold">वार्ड {voterWard} • भाग {voterBooth}</strong>
                           </div>
                           <div>
-                            <span className="text-slate-700 block text-[10px]">क्रमांक संख्या (Serial):</span>
-                            <strong className="text-emerald-800 font-black text-sm">{voterSerial}</strong>
+                            <span className="text-slate-500 block text-[10px]">क्रमांक संख्या (Serial):</span>
+                            <strong className="text-emerald-700 font-black text-sm">{voterSerial}</strong>
                           </div>
                           <div>
-                            <span className="text-slate-700 block text-[10px]">मकान संख्या:</span>
+                            <span className="text-slate-500 block text-[10px]">मकान संख्या:</span>
                             <strong className="text-slate-900">{voterHouse}</strong>
                           </div>
                           <div>
-                            <span className="text-slate-700 block text-[10px]">EPIC नंबर:</span>
+                            <span className="text-slate-500 block text-[10px]">EPIC नंबर:</span>
                             <strong className="text-slate-900 font-mono">{voterEpic}</strong>
                           </div>
                         </div>
 
                         <div className="border-t border-slate-200 pt-1.5">
-                          <span className="text-slate-700 block text-[10px]">मतदान केंद्र का पता:</span>
+                          <span className="text-slate-500 block text-[10px]">मतदान केंद्र का पता:</span>
                           <strong className="text-slate-800 text-[11px]">{pollingStation}</strong>
                         </div>
                       </div>
@@ -804,13 +835,15 @@ export default function LandingPage() {
 
                   {/* Quick Reply WhatsApp CTA */}
                   <div className="pt-2">
-                    <button
-                      onClick={() => setLeadModalOpen(true)}
-                      className="w-full py-2.5 bg-[#25d366] hover:bg-[#20ba59] text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-2 shadow-md transition-colors"
+                    <a
+                      href={getWaLink(`नमस्ते, मुझे VijaySetu की यह लाइव वोटर पर्ची टेस्ट करनी है:\nप्रत्याशी: ${candidateName} (${candidateParty})\nमतदाता: ${voterName}\nवार्ड ${voterWard}, भाग ${voterBooth}`)}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="w-full py-3 bg-[#25d366] hover:bg-[#20ba59] text-white font-bold text-xs rounded-xl flex items-center justify-center space-x-2 shadow-md transition-colors text-center"
                     >
                       <MessageCircle size={15} />
-                      <span>यह पर्ची अपने WhatsApp पर टेस्ट करें</span>
-                    </button>
+                      <span>यह पर्ची अपने WhatsApp पर टेस्ट करें ({DISPLAY_PHONE})</span>
+                    </a>
                   </div>
                 </div>
 
@@ -824,10 +857,10 @@ export default function LandingPage() {
       </section>
 
       {/* THREE PERSONAS: WORKER APP vs WAR ROOM vs POLLING DAY */}
-      <section id="roles" className="py-20 relative bg-white border-b border-slate-200">
+      <section id="roles" className="py-20 relative bg-white border-b border-slate-200 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full">
               हर भूमिका के लिए अलग इंटरफेस
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 mb-4">
@@ -857,7 +890,7 @@ export default function LandingPage() {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                📱 कार्यकर्ता मोबाइल ऐप (Panna Pramukh)
+                📱 कार्यकर्ता व पन्ना प्रमुख ऐप
               </button>
               <button
                 onClick={() => setActiveTab('polling')}
@@ -867,65 +900,68 @@ export default function LandingPage() {
                     : 'text-slate-600 hover:text-slate-900'
                 }`}
               >
-                🗳️ मतदान दिवस पोलिंग डेस्क (Election Day)
+                🗳️ पोलिंग एजेंट डेस्क (Voting Day)
               </button>
             </div>
           </div>
 
-          {/* Dynamic Tab Content */}
-          <div className="p-8 rounded-3xl glass-card border-slate-200 bg-slate-50/50">
+          {/* Active Tab Showcase */}
+          <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-inner">
             {activeTab === 'warroom' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div className="space-y-4">
-                  <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Supreme Command Center</div>
+                  <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-3 py-1 rounded-full">
+                    मुख्य प्रत्याशी व रणनीतिकार
+                  </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                    प्रत्याशी व चुनाव रणनीतिकारों का वॉर-रूम
+                    पूरी विधानसभा की रियल-टाइम लाइव स्थिति
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    संपूर्ण विधानसभा या नगर निगम का 360-डिग्री दृश्य। कुल मतदाता, महिला-पुरुष अनुपात, जातिगत आंकड़े, 
-                    वार्ड-वार बढ़त का लक्ष्य और पन्ना प्रमुखों की ग्राउंड रिपोर्ट का एक संपूर्ण डैशबोर्ड।
+                  <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                    वॉर रूम में मुख्य प्रत्याशी को हर बूथ का लाइव वोटिंग प्रतिशत, मजबूत व कमजोर क्षेत्रों का मैप और कार्यकर्ताओं की ग्राउंड सक्रियता 1-स्क्रीन पर दिखती है।
                   </p>
-                  <div className="space-y-2.5 pt-2">
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                  <ul className="space-y-2 text-xs text-slate-700 pt-2">
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>घंटेवार लाइव मतदान प्रतिशत (Hourly Turnout Graph)</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>हर घंटे का पोलिंग प्रतिशत (Turnout %) ट्रैक</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>स्विंग बूथ्स (Swing Booths) व रिस्क ज़ोन की ऑटो-पहचान</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>जातिगत व सामाजिक वर्ग वार वोटिंग समीकरण</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>बड़ी LED स्क्रीन और प्रोजेक्टर पर लाइव वॉर रूम डिस्प्ले</span>
-                    </div>
+                      <span>कमजोर बूथों के लिए इमरजेंसी अलर्ट्स</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <button
+                      onClick={() => setLeadModalOpen(true)}
+                      className="glow-btn px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white shadow-md cursor-pointer"
+                    >
+                      वॉर-रूम का लाइव एक्सेस लें
+                    </button>
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md space-y-4">
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md space-y-4">
                   <div className="flex justify-between items-center border-b border-slate-100 pb-3">
-                    <span className="font-bold text-xs text-slate-800">लाइव वॉर रूम स्थिति (WAR-ROOM METRICS)</span>
-                    <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center space-x-1">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                      <span>LIVE</span>
+                    <div className="font-bold text-slate-900 text-sm">लाइव वॉर-रूम मॉनिटर (37-पचपदरा)</div>
+                    <span className="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                      LIVE • 2:30 PM
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-3 text-center">
-                    <div className="bg-slate-50 p-3 rounded-xl border border-slate-200">
-                      <div className="text-xl font-black text-slate-900">2,48,510</div>
-                      <div className="text-[10px] text-slate-500">कुल मतदाता (Total Voters)</div>
+                  <div className="grid grid-cols-3 gap-3 text-center">
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-lg font-black text-slate-900">2,42,100</div>
+                      <div className="text-[10px] text-slate-500">कुल मतदाता</div>
                     </div>
-                    <div className="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
-                      <div className="text-xl font-black text-emerald-700">64.8%</div>
-                      <div className="text-[10px] text-emerald-800">लाइव टर्नआउट (Turnout)</div>
+                    <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                      <div className="text-lg font-black text-emerald-700">54.8%</div>
+                      <div className="text-[10px] text-emerald-800">वर्तमान पोलिंग</div>
                     </div>
-                  </div>
-                  <div className="p-3 bg-slate-50 rounded-xl text-xs space-y-1">
-                    <div className="flex justify-between font-bold text-slate-800">
-                      <span>बूथ 37 (पचपदरा)</span>
-                      <span className="text-emerald-700">71.2% मतदान</span>
-                    </div>
-                    <div className="w-full bg-slate-200 h-2 rounded-full overflow-hidden">
-                      <div className="bg-emerald-600 h-full w-[71.2%]" />
+                    <div className="p-3 bg-slate-50 rounded-xl border border-slate-200">
+                      <div className="text-lg font-black text-slate-900">238 / 238</div>
+                      <div className="text-[10px] text-slate-500">बूथ कनेक्टेड</div>
                     </div>
                   </div>
                 </div>
@@ -933,48 +969,57 @@ export default function LandingPage() {
             )}
 
             {activeTab === 'worker' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div className="space-y-4">
-                  <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Ground Mobilization Tool</div>
+                  <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-3 py-1 rounded-full">
+                    फील्ड कार्यकर्ता व पन्ना प्रमुख
+                  </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                    पन्ना प्रमुख व बूथ कार्यकर्ता मोबाइल ऐप
+                    हर कार्यकर्ता की जेब में उसका पन्ना
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    हर पन्ना प्रमुख को उसके 30 से 60 मतदाताओं की डिजिटल सूची मिलती है। एक टैप में कॉल करें, 
-                    WhatsApp पर्ची भेजें और मतदाता का समर्थन स्टेटस (सपोर्टर/तटस्थ/विरोधी) रिकॉर्ड करें।
+                  <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                    कार्यकर्ता को पूरे क्षेत्र की लंबी लिस्ट में उलझने की ज़रूरत नहीं। उसे केवल उसके 60 मतदाताओं की लिस्ट दिखती है, जिसे वह घर-घर जाकर मार्क कर सकता है।
                   </p>
-                  <div className="space-y-2.5 pt-2">
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                  <ul className="space-y-2 text-xs text-slate-700 pt-2">
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>2G व बिना इंटरनेट के भी सुपरफास्ट काम</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>सिर्फ 1-क्लिक में सपोर्टर / न्यूट्रल / विरोधी मार्किंग</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>एक क्लिक में कॉल व WhatsApp पर्ची शेयरिंग</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>सीधे ऐप से वोटर को कॉल या WhatsApp पर्ची</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>कार्यकर्ता की दैनिक जनसंपर्क रिपोर्ट स्वतः तैयार</span>
-                    </div>
+                      <span>बिना इंटरनेट के भी ऑफलाइन कार्य करने में सक्षम</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <button
+                      onClick={() => setLeadModalOpen(true)}
+                      className="glow-btn px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white shadow-md cursor-pointer"
+                    >
+                      कार्यकर्ता ऐप डेमो देखें
+                    </button>
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md space-y-3">
-                  <div className="text-xs font-bold text-slate-800 border-b border-slate-100 pb-2">पन्ना प्रमुख: राजेश सोलंकी (पन्ना नं. 14)</div>
-                  <div className="space-y-2 text-xs">
-                    <div className="p-2.5 bg-emerald-50 border border-emerald-200 rounded-xl flex justify-between items-center">
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md space-y-3">
+                  <div className="font-bold text-slate-900 text-sm">पन्ना प्रमुख: मोहन लाल (पन्ना नं. 14)</div>
+                  <div className="space-y-2">
+                    <div className="p-3 bg-emerald-50/50 rounded-xl border border-emerald-200 flex justify-between items-center text-xs">
                       <div>
-                        <div className="font-bold text-slate-900">सुरेश कुमार वर्मा (क्र. 342)</div>
-                        <div className="text-[10px] text-slate-500">मकान 27क • उम्र 50 • पुरुष</div>
+                        <strong>रमेश कुमार शर्मा (क्र. 121)</strong>
+                        <div className="text-[10px] text-slate-500">मकान 42 • पक्षधर (Core Supporter)</div>
                       </div>
-                      <span className="text-[10px] font-bold text-emerald-700 bg-white px-2 py-0.5 rounded border border-emerald-300">पक्का समर्थक</span>
+                      <span className="text-emerald-700 font-bold bg-white px-2 py-1 rounded-md border border-emerald-200">सत्यापित</span>
                     </div>
-                    <div className="p-2.5 bg-slate-50 border border-slate-200 rounded-xl flex justify-between items-center">
+                    <div className="p-3 bg-amber-50/50 rounded-xl border border-amber-200 flex justify-between items-center text-xs">
                       <div>
-                        <div className="font-bold text-slate-900">कैलाश तापड़िया (क्र. 343)</div>
-                        <div className="text-[10px] text-slate-500">मकान 28 • उम्र 54 • पुरुष</div>
+                        <strong>कैलाश चंद्र जाट (क्र. 122)</strong>
+                        <div className="text-[10px] text-slate-500">मकान 43 • न्यूट्रल (Swing Voter)</div>
                       </div>
-                      <span className="text-[10px] font-bold text-amber-700 bg-white px-2 py-0.5 rounded border border-amber-300">तटस्थ (संपर्क शेष)</span>
+                      <span className="text-amber-700 font-bold bg-white px-2 py-1 rounded-md border border-amber-200">फॉलो-अप</span>
                     </div>
                   </div>
                 </div>
@@ -982,40 +1027,46 @@ export default function LandingPage() {
             )}
 
             {activeTab === 'polling' && (
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div className="space-y-4">
-                  <div className="text-xs font-bold text-emerald-800 uppercase tracking-wider">Election Day Table Desk</div>
+                  <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider bg-emerald-100 px-3 py-1 rounded-full">
+                    मतदान दिवस (D-Day Operations)
+                  </span>
                   <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                    मतदान दिवस पोलिंग डेस्क इंटरफेस
+                    बूथ पर 1 सेकंड में मार्किंग — कौन आया, कौन बाकी
                   </h3>
-                  <p className="text-sm text-slate-600 leading-relaxed">
-                    मतदान केंद्र की टेबल पर बैठे एजेंट के लिए सुपर-सरल इंटरफ़ेस। जैसे ही मतदाता वोट डालकर निकले, 
-                    "वोट डल गया" बटन दबाएं। वॉर-रूम को सेकंडों में पता चल जाता है कि किस परिवार का वोट बचा है।
+                  <p className="text-sm text-slate-600 leading-relaxed font-medium">
+                    मतदान के दिन टेबल पर बैठे एजेंट को केवल वोटर के क्रमांक पर टैप करना होता है। तुरंत वॉर-रूम में अपडेट हो जाता है कि उस परिवार ने मतदान कर दिया है।
                   </p>
-                  <div className="space-y-2.5 pt-2">
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                  <ul className="space-y-2 text-xs text-slate-700 pt-2">
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>शाम 3 बजे न आए वोटरों की ऑटो-लिस्ट</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>क्रमांक या नाम से बिजली की गति से सर्च</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>परिवारवार वोटिंग ट्रैकिंग (पूरा परिवार आया या कुछ शेष)</span>
-                    </div>
-                    <div className="flex items-center space-x-2 text-xs font-semibold text-slate-700">
+                      <span>दोपहर 3 बजे बचे हुए समर्थकों की गाड़ियां रवाना</span>
+                    </li>
+                    <li className="flex items-center space-x-2">
                       <CheckCircle2 size={16} className="text-emerald-600" />
-                      <span>विपक्ष के मजबूत बूथों पर तुरंत अलर्ट</span>
-                    </div>
+                      <span>फर्जी वोटिंग पर तुरंत अलर्ट</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <button
+                      onClick={() => setLeadModalOpen(true)}
+                      className="glow-btn px-6 py-3 rounded-xl text-xs sm:text-sm font-bold text-white shadow-md cursor-pointer"
+                    >
+                      पोलिंग डे इंटरफेस देखें
+                    </button>
                   </div>
                 </div>
 
-                <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-md space-y-3">
-                  <div className="text-xs font-bold text-slate-800 border-b border-slate-100 pb-2">बूथ 37 • पोलिंग टेबल इंटरफेस</div>
-                  <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200 flex justify-between items-center text-xs">
-                    <div>
-                      <div className="font-bold text-slate-900">कुल वोटर: 1,775</div>
-                      <div className="text-emerald-700 font-bold">वोट डल चुके: 1,280 (72%)</div>
-                    </div>
-                    <span className="text-[10px] font-bold text-white bg-emerald-600 px-3 py-1.5 rounded-lg">495 वोट शेष</span>
+                <div className="bg-white rounded-2xl p-6 border border-slate-200 shadow-md space-y-3">
+                  <div className="font-bold text-slate-900 text-sm">बूथ डेस्क • कमरा नं. 2 (भाग 37)</div>
+                  <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 flex justify-between items-center text-xs">
+                    <span>मतदान स्थिति: <strong>642 / 980 मत डाले गए</strong></span>
+                    <span className="text-emerald-700 font-black">65.5%</span>
                   </div>
                 </div>
               </div>
@@ -1024,84 +1075,89 @@ export default function LandingPage() {
         </div>
       </section>
 
-      {/* COMPARISON SECTION (SMARTBOOTH vs TRADITIONAL PAPER) */}
-      <section id="comparison" className="py-20 relative bg-[#f8fafc] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center max-w-3xl mx-auto mb-14">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
-              तुलना व अंतर
+      {/* COMPARISON TABLE */}
+      <section id="comparison" className="py-20 relative bg-[#f8fafc] border-b border-slate-200 scroll-mt-28">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-14">
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full">
+              पारंपरिक बनाम आधुनिक तकनीक
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 mb-4">
-              विजयसेतु बनाम पुरानी कागजी पर्ची
+              कागजी पर्ची बनाम VijaySetu डिजिटल वॉर-रूम
             </h2>
-            <p className="text-base sm:text-lg text-slate-600">
-              जानिए क्यों आधुनिक प्रत्याशी कागजी पर्चियों की बर्बादी छोड़ डिजिटल वॉर रूम अपना रहे हैं।
+            <p className="text-base text-slate-600">
+              जानें क्यों पुराने तरीकों से चुनाव लड़ना हार का सबसे बड़ा कारण बनता है।
             </p>
           </div>
 
-          <div className="max-w-5xl mx-auto rounded-3xl glass-card overflow-hidden border-slate-200 bg-white shadow-lg">
-            <div className="grid grid-cols-12 bg-slate-900 text-white p-4 font-bold text-xs sm:text-sm">
-              <div className="col-span-4 sm:col-span-4">मापदंड (Metric)</div>
-              <div className="col-span-4 sm:col-span-4 text-red-300">पुरानी कागजी पर्ची</div>
-              <div className="col-span-4 sm:col-span-4 text-emerald-400">VijaySetu डिजिटल वॉर रूम</div>
-            </div>
-
-            <div className="divide-y divide-slate-100 text-xs sm:text-sm font-medium">
-              <div className="grid grid-cols-12 p-4 items-center">
-                <div className="col-span-4 font-bold text-slate-900">पर्ची वितरण गति</div>
-                <div className="col-span-4 text-slate-500">10 से 15 दिन (घर-घर बांटने में)</div>
-                <div className="col-span-4 text-emerald-800 font-bold">मात्र 1 सेकंड (सीधे WhatsApp पर)</div>
-              </div>
-              <div className="grid grid-cols-12 p-4 items-center bg-slate-50/50">
-                <div className="col-span-4 font-bold text-slate-900">खर्च में बचत</div>
-                <div className="col-span-4 text-slate-500">लाखों रुपये प्रिंटिंग व वितरण में व्यर्थ</div>
-                <div className="col-span-4 text-emerald-800 font-bold">80% बजट की सीधी बचत</div>
-              </div>
-              <div className="grid grid-cols-12 p-4 items-center">
-                <div className="col-span-4 font-bold text-slate-900">मतदान दिवस ट्रैकिंग</div>
-                <div className="col-span-4 text-slate-500">कोई डेटा नहीं, केवल अंदाज लगाना</div>
-                <div className="col-span-4 text-emerald-800 font-bold">घंटेवार लाइव टर्नआउट प्रतिशत</div>
-              </div>
-              <div className="grid grid-cols-12 p-4 items-center bg-slate-50/50">
-                <div className="col-span-4 font-bold text-slate-900">कार्यकर्ता जवाबदेही</div>
-                <div className="col-span-4 text-slate-500">किसने कितना काम किया, अज्ञात</div>
-                <div className="col-span-4 text-emerald-800 font-bold">पन्ना प्रमुखों की लाइव रिपोर्टिंग</div>
-              </div>
-              <div className="grid grid-cols-12 p-4 items-center">
-                <div className="col-span-4 font-bold text-slate-900">पर्ची खोने का खतरा</div>
-                <div className="col-span-4 text-slate-500">बहुत ज्यादा (वोटर अक्सर भूल जाते हैं)</div>
-                <div className="col-span-4 text-emerald-800 font-bold">शून्य (हमेशा मोबाइल में सुरक्षित)</div>
-              </div>
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs sm:text-sm">
+                <thead>
+                  <tr className="bg-slate-100/80 border-b border-slate-200 text-slate-700">
+                    <th className="p-4 sm:p-5 font-bold">सुविधा / पैरामीटर</th>
+                    <th className="p-4 sm:p-5 font-bold text-red-600 bg-red-50/50">पुराना कागजी तरीका</th>
+                    <th className="p-4 sm:p-5 font-bold text-emerald-700 bg-emerald-50">VijaySetu डिजिटल वॉर रूम</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-200">
+                  <tr>
+                    <td className="p-4 sm:p-5 font-semibold text-slate-900">वोटर सर्च गति</td>
+                    <td className="p-4 sm:p-5 text-slate-500 bg-red-50/30">2 से 5 मिनट (कागज़ पलटना)</td>
+                    <td className="p-4 sm:p-5 text-emerald-700 font-bold bg-emerald-50/30">0.2 सेकंड (तुरंत रिजल्ट)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 sm:p-5 font-semibold text-slate-900">पर्ची वितरण लागत</td>
+                    <td className="p-4 sm:p-5 text-slate-500 bg-red-50/30">₹3 - ₹5 प्रति पर्ची (छपाई + मजदूरी)</td>
+                    <td className="p-4 sm:p-5 text-emerald-700 font-bold bg-emerald-50/30">लगभग 80% सस्ती (डिजिटल 1-क्लिक)</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 sm:p-5 font-semibold text-slate-900">पर्ची खोने का खतरा</td>
+                    <td className="p-4 sm:p-5 text-slate-500 bg-red-50/30">70% मतदाता पर्ची फेंक या भूल जाते हैं</td>
+                    <td className="p-4 sm:p-5 text-emerald-700 font-bold bg-emerald-50/30">हमेशा मतदाता के WhatsApp में सुरक्षित</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 sm:p-5 font-semibold text-slate-900">पोलिंग डे लाइव टर्नआउट</td>
+                    <td className="p-4 sm:p-5 text-slate-500 bg-red-50/30">अंधेरे में तीर (शाम 5 बजे तक पता नहीं)</td>
+                    <td className="p-4 sm:p-5 text-emerald-700 font-bold bg-emerald-50/30">हर घंटे लाइव बूथ-वार प्रतिशत</td>
+                  </tr>
+                  <tr>
+                    <td className="p-4 sm:p-5 font-semibold text-slate-900">पन्ना प्रमुख निगरानी</td>
+                    <td className="p-4 sm:p-5 text-slate-500 bg-red-50/30">शून्य (कोई रिपोर्टिंग नहीं)</td>
+                    <td className="p-4 sm:p-5 text-emerald-700 font-bold bg-emerald-50/30">100% लाइव कॉलिंग व संपर्क ट्रैकिंग</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </section>
 
-      {/* PLANS & PACKAGES */}
-      <section id="plans" className="py-20 relative bg-white">
+      {/* PRICING / PLANS SECTION */}
+      <section id="plans" className="py-20 relative bg-white border-b border-slate-200 scroll-mt-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-16">
-            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
-              कस्टमाइज्ड पैकेजेस
+            <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-50 border border-emerald-200 px-3.5 py-1 rounded-full">
+              पारदर्शी चुनावी पैकेजेस
             </span>
             <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-4 mb-4">
-              हर चुनाव के लिए तैयार पैकेज
+              अपने चुनाव स्तर के अनुसार चुनें
             </h2>
             <p className="text-base sm:text-lg text-slate-600">
-              नगर निगम वार्ड से लेकर लोकसभा संसदीय सीट तक — आपकी आवश्यकता अनुसार संपूर्ण तकनीकी समाधान।
+              पार्षद, ब्लॉक, विधानसभा से लेकर लोकसभा तक — हर स्तर के लिए कस्टमाइज्ड समाधान।
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Plan 1: Ward */}
-            <div className="p-8 rounded-3xl glass-card flex flex-col justify-between border-slate-200 bg-slate-50/50">
+            <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
               <div>
-                <span className="text-xs font-mono text-emerald-800 font-bold">वार्ड / पार्षद / पंचायत</span>
+                <span className="text-xs font-mono text-emerald-700 font-bold">वार्ड / नगर पालिका / पार्षद</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2 mb-3">वार्ड पैकेज</h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-6">
+                <p className="text-xs text-slate-500 leading-relaxed mb-6 font-medium">
                   1 से 3 वार्डों के प्रत्याशियों के लिए सटीक और बजट-अनुकूल समाधान।
                 </p>
-                <div className="space-y-3 text-xs text-slate-700 mb-8">
+                <div className="space-y-3 text-xs text-slate-700 mb-8 font-medium">
                   <div className="flex items-center space-x-2">
                     <Check size={14} className="text-emerald-600" />
                     <span>अप टू 15,000 वोटर्स क्षमता</span>
@@ -1136,12 +1192,12 @@ export default function LandingPage() {
             </div>
 
             {/* Plan 2: Assembly (Featured) */}
-            <div className="p-8 rounded-3xl glass-card flex flex-col justify-between border-emerald-500 relative shadow-xl shadow-emerald-600/10 bg-gradient-to-b from-emerald-50/80 to-white">
+            <div className="p-8 rounded-3xl bg-white border-2 border-emerald-500 flex flex-col justify-between relative shadow-2xl shadow-emerald-600/10 scale-105">
               <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-600 text-white font-extrabold text-[11px] px-4 py-1 rounded-full uppercase tracking-wider shadow-md">
                 सर्वाधिक अनुशंसित (MOST POPULAR)
               </div>
               <div>
-                <span className="text-xs font-mono text-emerald-800 font-bold">विधानसभा निर्वाचन क्षेत्र</span>
+                <span className="text-xs font-mono text-emerald-700 font-bold">विधानसभा निर्वाचन क्षेत्र</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2 mb-3">विधानसभा वॉर-रूम प्रो</h3>
                 <p className="text-xs text-slate-600 leading-relaxed mb-6 font-medium">
                   संपूर्ण विधानसभा सीट (1.5L - 3.5L मतदाता) का संपूर्ण डिजिटल प्रबंधन व वॉर रूम।
@@ -1189,14 +1245,14 @@ export default function LandingPage() {
             </div>
 
             {/* Plan 3: Lok Sabha */}
-            <div className="p-8 rounded-3xl glass-card flex flex-col justify-between border-slate-200 bg-slate-50/50">
+            <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
               <div>
-                <span className="text-xs font-mono text-emerald-800 font-bold">संसदीय सीट / पॉलिटिकल कंसल्टेंसी</span>
+                <span className="text-xs font-mono text-emerald-700 font-bold">संसदीय सीट / पॉलिटिकल कंसल्टेंसी</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2 mb-3">लोकसभा / एंटरप्राइज</h3>
-                <p className="text-xs text-slate-500 leading-relaxed mb-6">
+                <p className="text-xs text-slate-500 leading-relaxed mb-6 font-medium">
                   लोकसभा सांसद प्रत्याशियों और चुनावी एजेंसियों के लिए मल्टी-विधानसभा कस्टम सॉल्यूशन।
                 </p>
-                <div className="space-y-3 text-xs text-slate-700 mb-8">
+                <div className="space-y-3 text-xs text-slate-700 mb-8 font-medium">
                   <div className="flex items-center space-x-2">
                     <Check size={14} className="text-emerald-600" />
                     <span>मल्टी-विधानसभा (15 लाख से 25 लाख वोटर्स)</span>
@@ -1234,7 +1290,7 @@ export default function LandingPage() {
       </section>
 
       {/* FAQ SECTION */}
-      <section id="faq" className="py-20 relative bg-slate-50 border-t border-slate-200">
+      <section id="faq" className="py-20 relative bg-slate-50 border-t border-slate-200 scroll-mt-28">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-14">
             <span className="text-xs font-bold uppercase tracking-wider text-emerald-800 bg-emerald-100 border border-emerald-300 px-3.5 py-1 rounded-full">
@@ -1307,10 +1363,26 @@ export default function LandingPage() {
 
             <div>
               <div className="font-bold text-sm text-white mb-3">संपर्क व सहायता</div>
-              <div className="space-y-2 text-xs text-slate-400">
-                <div>📞 +91 91166 12345 / 99999 99999</div>
-                <div>💬 support@vijaysetu.in</div>
-                <div>🇮🇳 मेड इन इंडिया • भारतीय चुनावों के लिए समर्पित</div>
+              <div className="space-y-2.5 text-xs text-slate-300">
+                <div>
+                  <a
+                    href={getWaLink('नमस्ते, मुझे VijaySetu सॉफ्टवेयर डेमो के लिए संपर्क करना है।')}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="hover:text-emerald-400 font-bold flex items-center gap-1.5"
+                  >
+                    <MessageCircle size={14} className="text-emerald-400" />
+                    <span>WhatsApp: {DISPLAY_PHONE}</span>
+                  </a>
+                </div>
+                <div>
+                  <a href={`tel:+${WHATSAPP_NUMBER}`} className="hover:text-emerald-400 font-semibold flex items-center gap-1.5">
+                    <Phone size={14} className="text-emerald-400" />
+                    <span>कॉल: {DISPLAY_PHONE}</span>
+                  </a>
+                </div>
+                <div className="text-slate-400">💬 support@vijaysetu.in</div>
+                <div className="text-emerald-400 font-medium">🇮🇳 मेड इन इंडिया • भारतीय चुनावों के लिए समर्पित</div>
               </div>
             </div>
           </div>
@@ -1327,7 +1399,7 @@ export default function LandingPage() {
 
       {/* FLOATING WHATSAPP CTA BUTTON */}
       <a
-        href="https://wa.me/919999999999?text=Hello%20VijaySetu%20Team%2C%20I%20want%20a%20demo%20of%20the%20Election%20War%20Room%20Software"
+        href={getWaLink('नमस्ते VijaySetu टीम, मुझे चुनाव वॉर-रूम और वोटर पर्ची का लाइव डेमो चाहिए।')}
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 z-50 flex items-center space-x-2.5 bg-[#25d366] hover:bg-[#20ba59] text-white px-4 py-3 rounded-full shadow-2xl transition-transform hover:scale-105 cursor-pointer font-bold text-xs sm:text-sm"
@@ -1337,7 +1409,7 @@ export default function LandingPage() {
           <span className="relative inline-flex rounded-full h-3 w-3 bg-white" />
         </span>
         <MessageCircle size={20} />
-        <span className="hidden sm:inline">WhatsApp पर बात करें</span>
+        <span className="hidden sm:inline">WhatsApp पर बात करें ({DISPLAY_PHONE})</span>
       </a>
 
       {/* LEAD CAPTURE MODAL */}
@@ -1346,20 +1418,31 @@ export default function LandingPage() {
           <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
             <button
               onClick={() => setLeadModalOpen(false)}
-              className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 cursor-pointer"
+              className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 cursor-pointer p-1"
             >
               <X size={20} />
             </button>
 
             {leadSubmitted ? (
               <div className="text-center py-8 space-y-3">
-                <div className="w-14 h-14 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
-                  <CheckCircle2 size={32} />
+                <div className="w-16 h-16 bg-emerald-100 text-emerald-700 rounded-full flex items-center justify-center mx-auto">
+                  <CheckCircle2 size={36} />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900">धन्यवाद! अनुरोध प्राप्त हुआ</h3>
-                <p className="text-xs text-slate-600">
-                  हमारी तकनीकी टीम अगले 15 मिनट में आपके नंबर पर संपर्क करके लाइव डेमो शुरू करेगी।
+                <h3 className="text-xl font-black text-slate-900">धन्यवाद! अनुरोध प्राप्त हुआ</h3>
+                <p className="text-xs text-slate-600 font-medium">
+                  आपकी पूछताछ सीधे एडमिन पैनल में दर्ज हो गई है। हमारी टीम WhatsApp पर आपसे तुरंत संपर्क करेगी।
                 </p>
+                <div className="pt-2">
+                  <a
+                    href={getWaLink(`नमस्ते, मैंने वेबसाइट पर डेमो फॉर्म भरा है। नाम: ${leadForm.name}, क्षेत्र: ${leadForm.constituency}`)}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center space-x-2 bg-[#25d366] text-white px-4 py-2 rounded-xl text-xs font-bold shadow-md"
+                  >
+                    <MessageCircle size={16} />
+                    <span>WhatsApp पर डायरेक्ट बात करें</span>
+                  </a>
+                </div>
               </div>
             ) : (
               <div>
@@ -1426,11 +1509,18 @@ export default function LandingPage() {
                     </select>
                   </div>
 
+                  <div className="text-[11px] text-slate-500 flex items-center space-x-1.5 pt-1">
+                    <Lock size={12} className="text-emerald-600" />
+                    <span>🔒 आपका चुनावी डेटा 100% सुरक्षित और गोपनीय रहेगा।</span>
+                  </div>
+
                   <button
                     type="submit"
-                    className="w-full glow-btn py-3.5 rounded-xl font-bold text-sm text-white shadow-lg cursor-pointer mt-2"
+                    disabled={leadSubmitting}
+                    className="w-full glow-btn py-3.5 rounded-xl font-bold text-sm text-white shadow-lg cursor-pointer mt-2 flex items-center justify-center space-x-2"
                   >
-                    डेमो शुरू करें (Instant Access)
+                    <MessageCircle size={17} />
+                    <span>{leadSubmitting ? 'अनुरोध भेजा जा रहा है...' : `डेमो शुरू करें & WhatsApp चैट (${DISPLAY_PHONE})`}</span>
                   </button>
                 </form>
               </div>
