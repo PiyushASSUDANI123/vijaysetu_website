@@ -1,5 +1,12 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
+
+export const viewport: Viewport = {
+  themeColor: '#047857',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+};
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vijaysetu.in';
 

@@ -14,6 +14,7 @@ import {
   Target,
   Check,
   X,
+  Menu,
   ChevronDown,
   Layers,
   FileSpreadsheet,
@@ -26,6 +27,9 @@ const WHATSAPP_NUMBER = '916375324945';
 const DISPLAY_PHONE = '+91 6375 324 945';
 
 export default function LandingPage() {
+  // Mobile Nav State
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
   // Slip Simulator State
   const [slipMode, setSlipMode] = useState<'photo' | 'text'>('photo');
   const [candidateName, setCandidateName] = useState('रोहित शर्मा');
@@ -233,15 +237,15 @@ export default function LandingPage() {
   return (
     <div className="min-h-screen bg-[#f8fafc] text-[#0f172a] selection:bg-emerald-500 selection:text-white">
       {/* TOP NOTIFICATION BAR */}
-      <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white text-xs py-2 px-4 text-center font-medium shadow-sm">
-        <div className="max-w-7xl mx-auto flex items-center justify-center space-x-2">
-          <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase">New 2026 Edition</span>
-          <span>100% प्री-लोडेड वोटर डेटा • 24 घंटे में लाइव वॉर रूम • ECI फॉर्मेट WhatsApp पर्ची</span>
+      <div className="bg-gradient-to-r from-emerald-800 via-emerald-700 to-teal-800 text-white text-[11px] sm:text-xs py-2 px-3 sm:px-4 text-center font-medium shadow-sm">
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-1.5 sm:gap-2 flex-wrap">
+          <span className="bg-white/20 px-2 py-0.5 rounded text-[10px] font-bold tracking-wide uppercase shrink-0">New 2026 Edition</span>
+          <span>100% प्री-लोडेड वोटर डेटा • 24 घंटे में लाइव वॉर रूम • WhatsApp पर्ची</span>
           <a
             href={getWaLink('नमस्ते VijaySetu टीम, मुझे चुनाव वॉर-रूम सॉफ्टवेयर का लाइव डेमो चाहिए।')}
             target="_blank"
             rel="noreferrer"
-            className="hidden md:inline-flex items-center space-x-1 underline font-bold ml-2 hover:text-emerald-200"
+            className="hidden md:inline-flex items-center space-x-1 underline font-bold ml-1.5 hover:text-emerald-200"
           >
             <span>डेमो लें ({DISPLAY_PHONE})</span>
             <ArrowRight size={12} />
@@ -254,20 +258,20 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="#" className="flex items-center space-x-3 group">
+            <a href="#" className="flex items-center space-x-2.5 sm:space-x-3 group min-w-0">
               <img
                 src="/logo.png"
                 alt="VijaySetu Logo"
-                className="w-11 h-11 object-contain rounded-xl shadow-sm ring-1 ring-slate-200/80 group-hover:scale-105 transition-transform bg-white"
+                className="w-10 h-10 sm:w-11 sm:h-11 object-contain rounded-xl shadow-sm ring-1 ring-slate-200/80 group-hover:scale-105 transition-transform bg-white shrink-0"
               />
-              <div>
-                <span className="text-xl sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
+              <div className="min-w-0">
+                <span className="text-lg sm:text-2xl font-black tracking-tight text-slate-900 flex items-center">
                   Vijay<span className="text-emerald-700">Setu</span>
                   <span className="hidden sm:inline-block ml-2 text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded-full">
                     विजयसेतु
                   </span>
                 </span>
-                <span className="text-[11px] font-bold text-slate-500 block tracking-wider -mt-0.5">
+                <span className="text-[10px] sm:text-[11px] font-bold text-slate-500 block tracking-wider -mt-0.5 truncate">
                   हर वोट • सही दिशा • जीत की ओर
                 </span>
               </div>
@@ -284,7 +288,7 @@ export default function LandingPage() {
             </div>
 
             {/* Nav Actions */}
-            <div className="flex items-center space-x-3">
+            <div className="flex items-center space-x-2 sm:space-x-3">
               <a
                 href={getWaLink('नमस्ते VijaySetu टीम, मुझे सॉफ्टवेयर के बारे में जानकारी चाहिए।')}
                 target="_blank"
@@ -296,24 +300,104 @@ export default function LandingPage() {
               </a>
 
               <a
-                href="http://localhost:3000/login"
+                href="https://vijaysetu.vercel.app/login"
                 target="_blank"
                 rel="noreferrer"
-                className="hidden sm:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-600 px-4 py-2 rounded-xl transition-colors border border-slate-200 hover:border-slate-300"
+                className="hidden md:inline-flex text-xs sm:text-sm font-bold text-slate-700 hover:text-emerald-600 px-3.5 py-2 rounded-xl transition-colors border border-slate-200 hover:border-slate-300"
               >
-                लॉगिन करें
+                लॉगिन
               </a>
 
               <button
                 onClick={() => setLeadModalOpen(true)}
-                className="glow-btn px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center space-x-2 cursor-pointer shadow-md"
+                className="glow-btn px-3 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white flex items-center space-x-1.5 sm:space-x-2 cursor-pointer shadow-md shrink-0"
               >
-                <Sparkles size={16} />
-                <span>फ्री लाइव डेमो</span>
+                <Sparkles size={15} />
+                <span className="hidden xs:inline sm:inline">फ्री लाइव डेमो</span>
+                <span className="inline xs:hidden sm:hidden">डेमो</span>
+              </button>
+
+              {/* Mobile Hamburger Button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                aria-label="Toggle mobile menu"
+                className="lg:hidden p-2 rounded-xl text-slate-700 hover:text-emerald-700 hover:bg-slate-100 transition-colors border border-slate-200 cursor-pointer"
+              >
+                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
               </button>
             </div>
           </div>
         </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <div className="lg:hidden border-t border-slate-200 bg-white/98 backdrop-blur-md px-4 pt-3 pb-6 space-y-3 shadow-xl">
+            <div className="flex flex-col space-y-1 text-sm font-bold text-slate-800">
+              <a
+                href="#features"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                सुविधाएं (Features)
+              </a>
+              <a
+                href="#simulator"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                लाइव पर्ची डेमो (Voter Slip Simulator)
+              </a>
+              <a
+                href="#roles"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                मोबाइल व वॉर रूम (Roles & Interface)
+              </a>
+              <a
+                href="#comparison"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                कागजी पर्ची बनाम VijaySetu (Comparison)
+              </a>
+              <a
+                href="#plans"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                पैकेजेस (Pricing Plans)
+              </a>
+              <a
+                href="#faq"
+                onClick={() => setMobileMenuOpen(false)}
+                className="px-3.5 py-2.5 rounded-xl hover:bg-emerald-50 hover:text-emerald-700 transition-colors"
+              >
+                FAQ (सामान्य प्रश्न)
+              </a>
+            </div>
+
+            <div className="pt-3 border-t border-slate-100 flex flex-col gap-2">
+              <a
+                href="https://vijaysetu.vercel.app/login"
+                target="_blank"
+                rel="noreferrer"
+                className="w-full text-center py-2.5 rounded-xl text-sm font-bold text-slate-800 border border-slate-300 hover:bg-slate-50 transition-colors"
+              >
+                एडमिन व क्लाइंट लॉगिन करें
+              </a>
+              <a
+                href={getWaLink('नमस्ते VijaySetu टीम, मुझे सॉफ्टवेयर के बारे में जानकारी चाहिए।')}
+                target="_blank"
+                rel="noreferrer"
+                className="w-full text-center py-2.5 rounded-xl text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 hover:bg-emerald-100 transition-colors flex items-center justify-center space-x-1.5"
+              >
+                <Phone size={14} className="text-emerald-600" />
+                <span>कॉल / WhatsApp: {DISPLAY_PHONE}</span>
+              </a>
+            </div>
+          </div>
+        )}
       </nav>
 
       {/* HERO SECTION */}
@@ -531,7 +615,7 @@ export default function LandingPage() {
               return (
                 <div
                   key={m.id}
-                  className="p-8 rounded-3xl bg-white border-2 border-slate-100 hover:border-emerald-500 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5"
+                  className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-slate-100 hover:border-emerald-500 flex flex-col justify-between transition-all duration-300 shadow-md hover:shadow-2xl hover:-translate-y-1.5"
                 >
                   <div>
                     {/* Header with Icon and Badge */}
@@ -597,10 +681,10 @@ export default function LandingPage() {
             </p>
 
             {/* Toggle Mode: Photo Slip vs Text Slip */}
-            <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-white border border-slate-300 shadow-sm">
+            <div className="mt-8 flex flex-col sm:inline-flex sm:flex-row items-stretch sm:items-center p-1.5 rounded-2xl bg-white border border-slate-300 shadow-sm gap-1.5 sm:gap-0 max-w-full">
               <button
                 onClick={() => setSlipMode('photo')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                className={`w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
                   slipMode === 'photo'
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
@@ -610,7 +694,7 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => setSlipMode('text')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                className={`w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
                   slipMode === 'text'
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
@@ -890,10 +974,10 @@ export default function LandingPage() {
             </p>
 
             {/* Persona Tabs */}
-            <div className="mt-8 inline-flex items-center p-1.5 rounded-2xl bg-slate-100 border border-slate-200">
+            <div className="mt-8 flex flex-col sm:flex-row flex-wrap justify-center gap-2 p-1.5 rounded-2xl bg-slate-100 border border-slate-200 max-w-full">
               <button
                 onClick={() => setActiveTab('warroom')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                className={`w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
                   activeTab === 'warroom'
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
@@ -903,7 +987,7 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => setActiveTab('worker')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                className={`w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
                   activeTab === 'worker'
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
@@ -913,7 +997,7 @@ export default function LandingPage() {
               </button>
               <button
                 onClick={() => setActiveTab('polling')}
-                className={`px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer ${
+                className={`w-full sm:w-auto px-4 sm:px-5 py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all cursor-pointer text-center ${
                   activeTab === 'polling'
                     ? 'bg-emerald-600 text-white shadow-md'
                     : 'text-slate-600 hover:text-slate-900'
@@ -925,7 +1009,7 @@ export default function LandingPage() {
           </div>
 
           {/* Active Tab Showcase */}
-          <div className="bg-slate-50 border border-slate-200 rounded-3xl p-8 sm:p-12 shadow-inner">
+          <div className="bg-slate-50 border border-slate-200 rounded-2xl sm:rounded-3xl p-5 sm:p-10 shadow-inner">
             {activeTab === 'warroom' && (
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
                 <div className="space-y-4">
@@ -1109,9 +1193,13 @@ export default function LandingPage() {
             </p>
           </div>
 
-          <div className="bg-white rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+          <div className="bg-white rounded-2xl sm:rounded-3xl border border-slate-200 shadow-xl overflow-hidden">
+            {/* Mobile swipe helper indicator */}
+            <div className="text-[11px] font-semibold text-slate-500 text-center py-2 px-3 sm:hidden flex items-center justify-center gap-1.5 bg-slate-50 border-b border-slate-200">
+              <span>👉 पूरी तुलना देखने के लिए दायें-बायें स्वाइप करें 👈</span>
+            </div>
             <div className="overflow-x-auto">
-              <table className="w-full text-left text-xs sm:text-sm">
+              <table className="w-full text-left text-xs sm:text-sm min-w-[560px]">
                 <thead>
                   <tr className="bg-slate-100/80 border-b border-slate-200 text-slate-700">
                     <th className="p-4 sm:p-5 font-bold">सुविधा / पैरामीटर</th>
@@ -1169,7 +1257,7 @@ export default function LandingPage() {
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-stretch">
             {/* Plan 1: Ward */}
-            <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
+            <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
               <div>
                 <span className="text-xs font-mono text-emerald-700 font-bold">वार्ड / नगर पालिका / पार्षद</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2 mb-3">वार्ड पैकेज</h3>
@@ -1211,8 +1299,8 @@ export default function LandingPage() {
             </div>
 
             {/* Plan 2: Assembly (Featured) */}
-            <div className="p-8 rounded-3xl bg-white border-2 border-emerald-500 flex flex-col justify-between relative shadow-2xl shadow-emerald-600/10 scale-105">
-              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-600 text-white font-extrabold text-[11px] px-4 py-1 rounded-full uppercase tracking-wider shadow-md">
+            <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-emerald-500 flex flex-col justify-between relative shadow-2xl shadow-emerald-600/10 md:scale-105">
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-emerald-600 text-white font-extrabold text-[11px] px-4 py-1 rounded-full uppercase tracking-wider shadow-md shrink-0">
                 सर्वाधिक अनुशंसित (MOST POPULAR)
               </div>
               <div>
@@ -1264,7 +1352,7 @@ export default function LandingPage() {
             </div>
 
             {/* Plan 3: Lok Sabha */}
-            <div className="p-8 rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
+            <div className="p-6 sm:p-8 rounded-2xl sm:rounded-3xl bg-white border-2 border-slate-200 hover:border-emerald-500 flex flex-col justify-between shadow-md transition-all">
               <div>
                 <span className="text-xs font-mono text-emerald-700 font-bold">संसदीय सीट / पॉलिटिकल कंसल्टेंसी</span>
                 <h3 className="text-2xl font-black text-slate-900 mt-2 mb-3">लोकसभा / एंटरप्राइज</h3>
@@ -1437,8 +1525,8 @@ export default function LandingPage() {
 
       {/* LEAD CAPTURE MODAL */}
       {leadModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in">
-          <div className="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-200 relative">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/70 backdrop-blur-sm animate-fade-in">
+          <div className="bg-white rounded-2xl sm:rounded-3xl max-w-lg w-full p-5 sm:p-8 shadow-2xl border border-slate-200 relative max-h-[92vh] overflow-y-auto">
             <button
               onClick={() => setLeadModalOpen(false)}
               className="absolute top-5 right-5 text-slate-400 hover:text-slate-700 cursor-pointer p-1"
