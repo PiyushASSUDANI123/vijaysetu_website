@@ -192,11 +192,23 @@ export default function LandingPage() {
 
     try {
       // Post to backend database so it appears in Admin Panel
-      await fetch('http://localhost:5002/api/admin/leads', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(leadForm),
-      });
+      const targets = [
+        'https://vijaysetu.vercel.app/api/admin/leads',
+        'https://vijaysetu.piyushassudani.in/api/admin/leads',
+        'http://localhost:5002/api/admin/leads',
+      ];
+      for (const target of targets) {
+        try {
+          const res = await fetch(target, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(leadForm),
+          });
+          if (res.ok) break;
+        } catch {
+          // try next target
+        }
+      }
     } catch (err) {
       console.warn('Backend leads API warning:', err);
     }
