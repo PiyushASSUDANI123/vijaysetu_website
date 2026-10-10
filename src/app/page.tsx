@@ -20,7 +20,9 @@ import {
   FileSpreadsheet,
   Lock,
   Headphones,
-  Database
+  Database,
+  Globe,
+  ExternalLink,
 } from 'lucide-react';
 
 const WHATSAPP_NUMBER = '917231077770';
@@ -401,6 +403,10 @@ export default function LandingPage() {
 
       {/* HERO SECTION */}
       <section className="relative pt-12 pb-20 lg:pt-16 lg:pb-24 overflow-hidden bg-grid-pattern">
+        {/* Ambient Gradient Glow Orbs */}
+        <div className="absolute top-1/4 left-1/3 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[380px] bg-gradient-to-tr from-emerald-500/15 via-teal-400/10 to-transparent blur-[120px] pointer-events-none -z-10" />
+        <div className="absolute top-1/2 right-10 w-[500px] h-[300px] bg-emerald-600/10 blur-[100px] pointer-events-none -z-10" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             
@@ -492,7 +498,7 @@ export default function LandingPage() {
 
             {/* Right Hero Column: Live Phone Mockup Preview */}
             <div className="lg:col-span-5 flex justify-center">
-              <div className="w-full max-w-sm sm:max-w-md bg-slate-900 rounded-[44px] p-4 border-4 border-slate-800 shadow-2xl relative">
+              <div className="w-full max-w-sm sm:max-w-md bg-slate-900 rounded-[44px] p-4 border-4 border-slate-800 shadow-2xl relative animate-float">
                 {/* Speaker & Sensor */}
                 <div className="w-28 h-4 bg-slate-800 rounded-full mx-auto mb-3" />
 
@@ -1438,8 +1444,42 @@ export default function LandingPage() {
       </section>
 
       {/* FOOTER & CTA */}
-      <footer className="bg-slate-900 text-white py-16 border-t border-slate-800">
+      <footer className="bg-slate-900 text-white py-16 border-t border-slate-800 relative overflow-hidden">
+        {/* Ambient Footer Glow */}
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[300px] bg-emerald-500/10 blur-[130px] pointer-events-none -z-10" />
+
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* OFFICIAL LIVE PORTAL CARD / REDIRECT BANNER */}
+          <div className="bg-gradient-to-r from-emerald-950/90 via-slate-900 to-emerald-950/90 border border-emerald-500/30 rounded-3xl p-6 sm:p-8 mb-14 flex flex-col lg:flex-row items-center justify-between gap-6 shadow-2xl relative overflow-hidden">
+            <div className="absolute -top-16 -right-16 w-48 h-48 bg-emerald-500/15 rounded-full blur-2xl pointer-events-none" />
+            <div className="flex items-center space-x-4 relative z-10 w-full lg:w-auto">
+              <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500/30 to-emerald-600/10 border border-emerald-400/30 flex items-center justify-center text-emerald-400 shrink-0 shadow-lg">
+                <Globe size={28} />
+              </div>
+              <div>
+                <div className="inline-flex items-center gap-2 text-[10.5px] font-bold text-emerald-400 uppercase tracking-widest bg-emerald-950/90 px-3 py-1 rounded-full border border-emerald-500/30 mb-1.5">
+                  <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                  आधिकारिक लाइव वेब पोर्टल • Official Website
+                </div>
+                <div className="text-xl sm:text-2xl font-black text-white tracking-tight">
+                  vijaysetu-website.vercel.app
+                </div>
+                <p className="text-xs text-slate-300 mt-1 max-w-xl">
+                  VijaySetu (विजयसेतु) चुनाव प्रबंधन प्रणाली की आधिकारिक वेबसाइट। डिजिटल वोटर पर्ची, वॉर रूम व कैंपेन कंसोल के लिए सीधे विजिट करें।
+                </p>
+              </div>
+            </div>
+            <a
+              href="https://vijaysetu-website.vercel.app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="relative z-10 w-full lg:w-auto inline-flex items-center justify-center space-x-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm px-7 py-4 rounded-2xl shadow-xl transition-all hover:scale-105 cursor-pointer shrink-0"
+            >
+              <span>वेबसाइट पर जाएं (vijaysetu-website.vercel.app)</span>
+              <ExternalLink size={16} />
+            </a>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
             <div className="md:col-span-2 space-y-4">
               <div className="flex items-center space-x-3">
@@ -1459,6 +1499,20 @@ export default function LandingPage() {
                 भारत का अत्याधुनिक राजनीतिक चुनाव सॉफ्टवेयर। मतदाता खोज, WhatsApp पर्ची, 
                 पन्ना प्रमुख ट्रैकिंग और पोलिंग टर्नआउट का संपूर्ण डिजिटल समाधान।
               </p>
+              <div className="pt-2 flex flex-wrap items-center gap-3">
+                <a
+                  href="https://vijaysetu-website.vercel.app"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg hover:bg-emerald-900/60 transition-colors"
+                >
+                  <Globe size={13} />
+                  <span>vijaysetu-website.vercel.app</span>
+                  <ExternalLink size={11} />
+                </a>
+                <span className="text-xs text-slate-500">|</span>
+                <span className="text-xs font-semibold text-slate-300">Roots Reach Media</span>
+              </div>
             </div>
 
             <div>
@@ -1468,18 +1522,30 @@ export default function LandingPage() {
                 <li><a href="#simulator" className="hover:text-emerald-400">लाइव पर्ची डेमो</a></li>
                 <li><a href="#roles" className="hover:text-emerald-400">वॉर-रूम डैशबोर्ड</a></li>
                 <li><a href="#plans" className="hover:text-emerald-400">पैकेजेस (Pricing)</a></li>
+                <li>
+                  <a
+                    href="https://vijaysetu-website.vercel.app"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1"
+                  >
+                    <span>आधिकारिक पोर्टल (Website)</span>
+                    <ExternalLink size={11} />
+                  </a>
+                </li>
               </ul>
             </div>
 
             <div>
-              <div className="font-bold text-sm text-white mb-3">संपर्क व सहायता</div>
+              <div className="font-bold text-sm text-white mb-3">संपर्क व एजेंसी</div>
               <div className="space-y-2.5 text-xs text-slate-300">
+                <div className="text-sm font-bold text-white">Roots Reach Media</div>
                 <div>
                   <a
-                    href={getWaLink('नमस्ते, मुझे VijaySetu सॉफ्टवेयर डेमो के लिए संपर्क करना है।')}
+                    href={getWaLink('नमस्ते Roots Reach Media, मुझे VijaySetu सॉफ्टवेयर डेमो के लिए संपर्क करना है।')}
                     target="_blank"
                     rel="noreferrer"
-                    className="hover:text-emerald-400 font-bold flex items-center gap-1.5"
+                    className="hover:text-emerald-400 font-bold flex items-center gap-1.5 text-emerald-400"
                   >
                     <MessageCircle size={14} className="text-emerald-400" />
                     <span>WhatsApp: {DISPLAY_PHONE}</span>
@@ -1498,8 +1564,19 @@ export default function LandingPage() {
           </div>
 
           <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <div>© 2026 VijaySetu (विजयसेतु). सर्वाधिकार सुरक्षित।</div>
+            <div>
+              © 2026 VijaySetu (विजयसेतु) &bull; Roots Reach Media. सर्वाधिकार सुरक्षित। &bull;{' '}
+              <a
+                href="https://vijaysetu-website.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-emerald-400 font-bold hover:underline"
+              >
+                vijaysetu-website.vercel.app
+              </a>
+            </div>
             <div className="flex space-x-4">
+              <a href="https://vijaysetu-website.vercel.app" className="hover:text-emerald-400">आधिकारिक वेबसाइट</a>
               <a href="/privacy.html" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
               <a href="/terms.html" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
             </div>
