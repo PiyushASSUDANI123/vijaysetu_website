@@ -1462,7 +1462,7 @@ export default function LandingPage() {
                   आधिकारिक लाइव वेब पोर्टल • Official Website
                 </div>
                 <div className="text-xl sm:text-2xl font-black text-white tracking-tight">
-                  vijaysetu-website.vercel.app
+                  VijaySetu आधिकारिक वेबसाइट
                 </div>
                 <p className="text-xs text-slate-300 mt-1 max-w-xl">
                   VijaySetu (विजयसेतु) चुनाव प्रबंधन प्रणाली की आधिकारिक वेबसाइट। डिजिटल वोटर पर्ची, वॉर रूम व कैंपेन कंसोल के लिए सीधे विजिट करें।
@@ -1475,7 +1475,7 @@ export default function LandingPage() {
               rel="noopener noreferrer"
               className="relative z-10 w-full lg:w-auto inline-flex items-center justify-center space-x-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-400 hover:to-teal-400 text-slate-950 font-black text-sm px-7 py-4 rounded-2xl shadow-xl transition-all hover:scale-105 cursor-pointer shrink-0"
             >
-              <span>वेबसाइट पर जाएं (vijaysetu-website.vercel.app)</span>
+              <span>वेबसाइट पर जाएं</span>
               <ExternalLink size={16} />
             </a>
           </div>
@@ -1507,7 +1507,7 @@ export default function LandingPage() {
                   className="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-400 bg-emerald-950/60 border border-emerald-500/30 px-3 py-1.5 rounded-lg hover:bg-emerald-900/60 transition-colors"
                 >
                   <Globe size={13} />
-                  <span>vijaysetu-website.vercel.app</span>
+                  <span>आधिकारिक वेबसाइट</span>
                   <ExternalLink size={11} />
                 </a>
                 <span className="text-xs text-slate-500">|</span>
@@ -1529,7 +1529,7 @@ export default function LandingPage() {
                     rel="noopener noreferrer"
                     className="text-emerald-400 hover:text-emerald-300 font-bold inline-flex items-center gap-1"
                   >
-                    <span>आधिकारिक पोर्टल (Website)</span>
+                    <span>आधिकारिक वेबसाइट</span>
                     <ExternalLink size={11} />
                   </a>
                 </li>
@@ -1557,7 +1557,6 @@ export default function LandingPage() {
                     <span>कॉल: {DISPLAY_PHONE}</span>
                   </a>
                 </div>
-                <div className="text-slate-400">💬 support@vijaysetu.in</div>
                 <div className="text-emerald-400 font-medium">🇮🇳 मेड इन इंडिया • भारतीय चुनावों के लिए समर्पित</div>
               </div>
             </div>
@@ -1572,13 +1571,13 @@ export default function LandingPage() {
                 rel="noopener noreferrer"
                 className="text-emerald-400 font-bold hover:underline"
               >
-                vijaysetu-website.vercel.app
+                आधिकारिक वेबसाइट
               </a>
             </div>
             <div className="flex space-x-4">
-              <a href="https://vijaysetu-website.vercel.app" className="hover:text-emerald-400">आधिकारिक वेबसाइट</a>
-              <a href="/privacy.html" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
-              <a href="/terms.html" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
+              <a href="https://vijaysetu-website.vercel.app" className="hover:text-emerald-400 font-semibold">वेबसाइट</a>
+              <a href="/privacy" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
+              <a href="/terms" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
             </div>
           </div>
         </div>
