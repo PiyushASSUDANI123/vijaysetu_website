@@ -1500,8 +1500,8 @@ export default function LandingPage() {
           <div className="pt-8 border-t border-slate-800 text-center text-xs text-slate-500 flex flex-col sm:flex-row justify-between items-center gap-4">
             <div>© 2026 VijaySetu (विजयसेतु). सर्वाधिकार सुरक्षित।</div>
             <div className="flex space-x-4">
-              <a href="#" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
-              <a href="#" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
+              <a href="/privacy.html" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
+              <a href="/terms.html" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
             </div>
           </div>
         </div>
