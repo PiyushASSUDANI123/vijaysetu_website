@@ -13,10 +13,11 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://vijaysetu.in';
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'VijaySetu (विजयसेतु) | भारत का #1 चुनाव प्रबंधन व डिजिटल वॉर रूम सॉफ्टवेयर',
-  description: 'भारत का अग्रणी इलेक्शन मैनेजमेंट व वोटर डेटाबेस प्लेटफॉर्म। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन, बूथ-वार लाइव टर्नआउट, जातिगत समीकरण व रियल-टाइम वॉर रूम इंटेलिजेंस। संपर्क करें: +91 6375 324 945',
+  description: 'भारत का अग्रणी इलेक्शन मैनेजमेंट व वोटर डेटाबेस प्लेटफॉर्म। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन, बूथ-वार लाइव टर्नआउट, जातिगत समीकरण व रियल-टाइम वॉर रूम इंटेलिजेंस। Roots Reach Media - संपर्क करें: +91 72310 77770',
   keywords: [
     'VijaySetu',
     'विजयसेतु',
+    'Roots Reach Media',
     'Election Management Software India',
     'Voter Slip Generator WhatsApp',
     'Chunav War Room Software',
@@ -27,9 +28,9 @@ export const metadata: Metadata = {
     'WhatsApp Election Campaign',
     'Booth Adhyaksh App'
   ],
-  authors: [{ name: 'VijaySetu Team', url: siteUrl }],
-  creator: 'VijaySetu Technologies',
-  publisher: 'VijaySetu',
+  authors: [{ name: 'Roots Reach Media', url: siteUrl }],
+  creator: 'Roots Reach Media',
+  publisher: 'VijaySetu / Roots Reach Media',
   formatDetection: {
     email: false,
     address: false,
@@ -50,8 +51,8 @@ export const metadata: Metadata = {
   },
   manifest: '/manifest.webmanifest',
   openGraph: {
-    title: 'VijaySetu (विजयसेतु) - चुनाव प्रबंधन का संपूर्ण डिजिटल वॉर रूम',
-    description: 'बूथ से लेकर वॉर-रूम तक, हर वोट और कार्यकर्ता पर सटीक नियंत्रण। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन व लाइव टर्नआउट। डेमो बुक करें: +91 6375 324 945',
+    title: 'VijaySetu (विजयसेतु) - चुनाव प्रबंधन का संपूर्ण डिजिटल वॉर रूम | Roots Reach Media',
+    description: 'बूथ से लेकर वॉर-रूम तक, हर वोट और कार्यकर्ता पर सटीक नियंत्रण। 1-सेकंड मतदाता पर्ची, WhatsApp ऑटोमेशन व लाइव टर्नआउट। Roots Reach Media: +91 72310 77770',
     url: siteUrl,
     siteName: 'VijaySetu (विजयसेतु)',
     locale: 'hi_IN',
@@ -76,9 +77,9 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'VijaySetu (विजयसेतु) | Election Management Software & War Room',
-    description: 'बूथ से लेकर वॉर-रूम तक हर वोट पर सटीक नियंत्रण। 1-सेकंड मतदाता पर्ची व WhatsApp ऑटोमेशन।',
+    description: 'बूथ से लेकर वॉर-रूम तक हर वोट पर सटीक नियंत्रण। Roots Reach Media: +91 72310 77770',
     images: ['/og-image.png'],
-    creator: '@VijaySetu',
+    creator: '@RootsReachMedia',
   },
   robots: {
     index: true,
@@ -100,7 +101,7 @@ const jsonLd = {
     {
       '@type': 'Organization',
       '@id': `${siteUrl}/#organization`,
-      name: 'VijaySetu (विजयसेतु)',
+      name: 'Roots Reach Media (VijaySetu)',
       url: siteUrl,
       logo: {
         '@type': 'ImageObject',
@@ -110,7 +111,7 @@ const jsonLd = {
       },
       contactPoint: {
         '@type': 'ContactPoint',
-        telephone: '+91-6375324945',
+        telephone: '+91-7231077770',
         contactType: 'sales & technical support',
         availableLanguage: ['Hindi', 'English'],
         areaServed: 'IN',

@@ -23,8 +23,8 @@ import {
   Database
 } from 'lucide-react';
 
-const WHATSAPP_NUMBER = '916375324945';
-const DISPLAY_PHONE = '+91 6375 324 945';
+const WHATSAPP_NUMBER = '917231077770';
+const DISPLAY_PHONE = '+91 72310 77770';
 
 export default function LandingPage() {
   // Mobile Nav State
@@ -220,7 +220,7 @@ export default function LandingPage() {
     setLeadSubmitting(false);
     setLeadSubmitted(true);
 
-    // Open WhatsApp to +91 6375 324 945
+    // Open WhatsApp to +91 72310 77770
     window.open(waUrl, '_blank');
 
     setTimeout(() => {
