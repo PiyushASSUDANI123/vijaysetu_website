@@ -1578,6 +1578,7 @@ export default function LandingPage() {
               <a href="https://vijaysetu-website.vercel.app" className="hover:text-emerald-400 font-semibold">वेबसाइट</a>
               <a href="/privacy" className="hover:text-slate-300">गोपनीयता नीति (Privacy Policy)</a>
               <a href="/terms" className="hover:text-slate-300">नियम व शर्तें (Terms)</a>
+              <a href="/child-safety" className="hover:text-slate-300">बाल सुरक्षा मानक (Child Safety)</a>
             </div>
           </div>
         </div>
